@@ -4,6 +4,6 @@
   }
 }
 
-p.small p.input-group {
+p.small, p.input-group {
   margin: 0;
 }
