@@ -1,25 +1,9 @@
-/* app css stylesheet */
-
-.menu {
-  list-style: none;
-  border-bottom: 0.1em solid black;
-  margin-bottom: 2em;
-  padding: 0 0 0.5em;
+@media (min-width: 768px) {
+  body {
+    padding-top: 1em;/*just feels a little tight on desktop*/
+  }
 }
 
-.menu:before {
-  content: "[";
-}
-
-.menu:after {
-  content: "]";
-}
-
-.menu > li {
-  display: inline;
-}
-
-.menu > li + li:before {
-  content: "|";
-  padding-right: 0.3em;
+p.small p.input-group {
+  margin: 0;
 }

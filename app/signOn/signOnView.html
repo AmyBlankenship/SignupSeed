@@ -1,0 +1,63 @@
+<form id="signon" name="signon" data-ng-submit="vm.stubSubmit()">
+    <form-group>
+        <label for="userName">User Name (Email)*:</label>
+        <input id="userName" name="userName" type="email" required maxlength="56" data-ng-model="vm.userName" class="form-control"/>
+        <!--ngMessages just seem too quirky-->
+        <div data-ng-if="signon.userName.$error.required" class="bg-danger">Please enter a value for this field.</div>
+        <div data-ng-if="signon.userName.$error.email" class="bg-danger">This field must be a valid email address.</div>
+        <div data-ng-if="signon.userName.$error.maxlength" class="bg-danger">This field can be at most 56 characters long.</div>
+    </form-group>
+    <form-group>
+        <label for="password">Password*:</label>
+        <input id="password" name="password" type="password" required minlength="6"
+               data-ng-model="vm.password"
+               class="form-control"/>
+        <!--It's kind of rude for the first indication of what's expected to be after they've left the field.
+            So tell them what we want here to help them out.
+         -->
+        <p class="small">(must be at least 9 characters)</p>
+        <div data-ng-if="signon.password.$error.required" class="bg-danger">Please enter a value for this field.</div>
+        <div data-ng-if="signon.password.$error.minlength" class="bg-danger">This field must be at least 9 characters.</div>
+    </form-group>
+    <form-group>
+        <label for="confirmPassword">Confirm Password*:</label>
+        <input id="confirmPassword" name="confirmPassword" type="password" required minlength="6"
+               data-ng-model="vm.confirmPassword"
+               ab-string-compare="true" other-val="{{vm.password}}"
+               class="form-control"/>
+        <div class="bg-danger" data-ng-if="signon.confirmPassword.$error.required">Please enter a value for this field.</div>
+        <div class="bg-danger" data-ng-if="signon.confirmPassword.$error.matchFields">Password and confirm password must match.</div>
+        <div class="bg-danger" data-ng-if="signon.confirmPassword.$error.minlength">This field must be at least 9 characters.</div>
+    </form-group>
+    <form-group>
+        <label for="firstName">First Name*:</label>
+        <input id="firstName" type="text" required data-ng-model="vm.firstName" maxlength="50" class="form-control">
+        <p class="small">(maximum of 50 characters)</p>
+        <div class="bg-danger" data-ng-if="signon.firstName.$error.required">Please enter a value for this field.</div>
+        <div class="bg-danger" data-ng-if="signon.firstName.$error.maxlength">This field can be at most 50 characters long.</div>
+    </form-group>
+    <form-group>
+        <label for="lastName">Last Name:</label>
+        <input id="lastName" type="text" data-ng-model="vm.lastName" maxlength="50" class="form-control">
+        <p>(maximum of 50 characters)</p>
+        <div data-ng-if="signon.lastName.maxlength">This field can be at most 50 characters long.</div>
+    </form-group>
+    <form-group>
+        <label for="birthdate">Date of Birth:</label>
+        <p class="input-group">
+            <input id="birthdate" name="birthdate" type="text" class="form-control"
+                   uib-datepicker-popup="MM/dd/yyyy"
+                   data-ng-model="vm.rawBirthDay" data-ng-change="vm.setBirthday(vm.rawBirthDay)"
+                   is-open="vm.datePopup" datepicker-options="vm.datePickerOptions"
+                   required="true" close-text="Close" alt-input-formats="['M!/d!/yyyy']"/>
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-default" data-ng-click="vm.datePopup=true">
+                    <span class="glyphicon glyphicon-calendar"></span>
+                </button>
+            </span>
+        </p>
+        <div data-ng-if="signon.birthdate.$error.required" class="bg-danger">Please enter a value for this field.</div>
+    </form-group>
+    <button type="submit" class="btn btn-primary" >Submit</button>
+</form>
+<div uib-alert class="alert-success" data-ng-if="!!vm.submitConfirm" close="vm.clearSubmitConfirm()">{{vm.submitConfirm}}</div>
